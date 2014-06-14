@@ -1,0 +1,17 @@
+/* CSS declarations go here */
+.sentence {
+    font-weight:bold;
+    font-size: 20px;
+}
+.a {
+    background: yellow;
+}
+.a:hover {
+    cursor: pointer;
+}
+.match {
+    height: 100px;
+}
+#words {
+    height: 20px;
+}

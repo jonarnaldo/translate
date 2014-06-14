@@ -1,0 +1,1 @@
+Mandarin = new Meteor.Collection('mandarin');

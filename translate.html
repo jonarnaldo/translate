@@ -1,0 +1,47 @@
+<head>
+  <title>translate</title>
+</head>
+
+<body>
+  {{> hello}}
+</body>
+
+<template name="hello">
+	<div class="jumbotron"><h2>Lost in Translation - Mandarin Track</h2></div>
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-lg-12">
+				<b>Directions:</b> Select the correct order of words!
+			</div>
+		</div>
+		<div class="row  text-center">
+			<div class="col-lg-12">
+				<div id="sentence"></div>
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col-lg-12">
+				<div class="match"></div>
+			</div>
+		</div>
+		<div class="row  text-center">
+			<div class="col-lg-12">
+				<div id="words"> 
+					<span class="a" id="hǎo">hǎo</span>
+					<span class="a" id="nǐ">nǐ</span>
+					<span class="a" id="ma">ma</span>
+				</div>
+			</div>
+		</div>
+		<div class="row  text-center">
+			<div class="col-lg-12">
+				<div id="res"></div>
+			</div>
+		</div>
+		<div class="row  text-center">
+			<div class="col-lg-12">
+				<button id="submit">submit</button>
+			</div>
+		</div>
+	</div>
+</template>
