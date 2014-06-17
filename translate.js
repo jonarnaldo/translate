@@ -1,84 +1,102 @@
+T = {
+  Phrase: 2,
+  TruthyArr: [],
+  Truthy: function (v1, v2) {
+    console.log('v1:' + v1 + 'v2: ' + v2);
+    T.TruthyArr.push((v1 === v2) ? "true" : "false");
+  },
+
+  TestSentence: function (arr) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] === 'false') {
+        T.loseScenario();
+        break;
+      } else if (i == arr.length - 1) {
+        T.winScenario();
+      }
+    }
+  },
+
+  winScenario: function(){
+    alert('Correct!');
+    T.Phrase++;
+    T.TruthyArr = [];
+  },
+
+  loseScenario: function(){
+    alert('Incorrect. Try Again!');
+  }
+};
+
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to translate.";
-  };
+
+  Template.hello.helpers({
+    sentence: function() {
+      return Mandarin.findOne({phrase: T.Phrase});
+    },
+    phrase: function(){
+      if (Meteor.status().status === "connected") {
+        console.log('yay, connected!');
+        var arr = Mandarin.find({phrase: T.Phrase}).fetch();
+        var mandarinArr = (arr[0].mandarin);
+        var res = [];
+        var obj = {};
+        for (var i = 0; i < mandarinArr.length; i++){
+          obj.mandarin = mandarinArr[i];
+          res.push(obj);
+          obj = {};
+        }
+        return res;        
+      } else {
+        console.log(Meteor.status());
+      }
+
+    }
+  }); 
 
   Template.hello.events({
-    'click input': function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    },
-
-    'click .a': function (e) {
+    'click .word': function (e) {
       var target = e.currentTarget;
-      console.log(e);
       var word = $(target).html();
-      $('.match').append('<span id="guess">' + word + ' </span>');
-      $('.match').css("font-size","40px");
+      $('.guess').append('<span id="guess">' + word + ' </span>');
+      $('.guess').css("font-size","40px");
       $(this).remove();
     },
 
     'click #submit': function () {
-      var arrTest = phrases[1].mandarin.split(" ");
+      var arr = Mandarin.find({phrase: T.Phrase},{fields: {mandarin: true}}).fetch();
+      var testArr = (arr[0].mandarin);
 
-      $('.match').children().each(function (index, value) {
-        var test = $(value).html(), phrase = arrTest[index] + " ";
-        res.push(test);
-        truthy(test, phrase);
+      $('.guess').children().each(function (index, value) {
+        var res = $(value).html();
+        console.log('res: ' + res);
+        T.Truthy(res, testArr[index] + " ");
       });
-      alert(TruthyArr);
-      testSentence(TruthyArr);
+      console.log(T.TruthyArr);
+
+      T.TestSentence(T.TruthyArr);
     }
 
 
   });
 
-  Template.hello.helpers({
-      /*
-      var init = function(){
-        var i = 1;
-
-        $('#sentence').append('<div id="word">' + phrases[1].english + '</div>');
-        $('#word').css("font-size", "50px");
-      };
-
-      init();
-      */
-    })
-
-
-
   //business logic
-  TruthyArr = [];
-  res = [];
 
-  var truthy = function (v1, v2) {
-    TruthyArr.push((v1 === v2) ? "true" : "false");
-  };
 
-  var testSentence = function (arr) {
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i] === 'false') {
-        alert('nope!');
-        break;
-      } else if (i == arr.length - 1) {
-        alert('yup!');
-      }
-    }
-  };
 
-  //data
-  phrases = {
-    1: { mandarin: "nǐ hǎo ma", english: "how are you?" },
-    2: { mandarin: "wǒ hěn hǎo, nǐ ne", english: "I'm fine, thanks. And you?" }
-  };
-
-  //view
 }
+
+
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    
+  
   });
+/*
+  Mandarin.insert({
+    phrase: 2,
+    english: ["hello"],
+    mandarin: ["nín", "hǎo"]
+  });
+*/
 }

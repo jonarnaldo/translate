@@ -3,10 +3,10 @@
     font-weight:bold;
     font-size: 20px;
 }
-.a {
+.word {
     background: yellow;
 }
-.a:hover {
+.word:hover {
     cursor: pointer;
 }
 .match {

@@ -9,36 +9,35 @@
 <template name="hello">
 	<div class="jumbotron"><h2>Lost in Translation - Mandarin Track</h2></div>
 	<div class="container">
-		<div class="row text-center">
+		<div class="row text-center" id="directions">
 			<div class="col-lg-12">
 				<b>Directions:</b> Select the correct order of words!
 			</div>
 		</div>
-		<div class="row  text-center">
+		<div class="row  text-center" id="sentenceContainer">
 			<div class="col-lg-12">
-				<div id="sentence"></div>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-lg-12">
-				<div class="match"></div>
-			</div>
-		</div>
-		<div class="row  text-center">
-			<div class="col-lg-12">
-				<div id="words"> 
-					<span class="a" id="hǎo">hǎo</span>
-					<span class="a" id="nǐ">nǐ</span>
-					<span class="a" id="ma">ma</span>
+				<div id="sentence">
+					{{#with sentence}}
+						<h1>{{english}}</h1>
+					{{/with}}
 				</div>
 			</div>
 		</div>
-		<div class="row  text-center">
+		<div class="row text-center" id="guessContainer">
 			<div class="col-lg-12">
-				<div id="res"></div>
+				<div class="guess"></div>
 			</div>
 		</div>
-		<div class="row  text-center">
+		<div class="row  text-center" id="wordContainer">
+			<div class="col-lg-12">
+				<div id="word">
+					{{#each phrase}}
+						<span class="word">{{mandarin}}</span>
+					{{/each}}
+					</div>
+			</div>
+		</div>
+		<div class="row  text-center" id="submitButton">
 			<div class="col-lg-12">
 				<button id="submit">submit</button>
 			</div>
