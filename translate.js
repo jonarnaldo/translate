@@ -39,7 +39,7 @@ if (Meteor.isClient) {
     Logic: {
       TruthyArr: [],
       Truthy: function (v1, v2) {
-        console.log('v1:' + v1 + 'v2: ' + v2);
+        console.log('correct word:' + v1 + 'guess: ' + v2);
         T.Logic.TruthyArr.push((v1 === v2) ? "true" : "false");
       },
 
@@ -75,13 +75,16 @@ if (Meteor.isClient) {
       },
       winScenario: function(){
         alert('Correct!');
-        T.Counter.set();
         this.TruthyArr = [];
         $('.guess').children().remove();
+        T.Counter.set();
+
 
       },
       loseScenario: function(){
         alert('Incorrect. Try Again!');
+        $('#guess').remove();
+        T.Logic.TruthyArr = [];
       }
     },
   };
@@ -108,7 +111,6 @@ if (Meteor.isClient) {
       var word = $(target).html();
       $('.guess').append('<span id="guess">' + word + ' </span>');
       $('.guess').css("font-size","40px");
-      $(target).remove();
     },
 
     'click #submit': function () {
