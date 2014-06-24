@@ -9,7 +9,7 @@
 .word:hover {
     cursor: pointer;
 }
-.match {
+.guess {
     height: 100px;
 }
 #words {

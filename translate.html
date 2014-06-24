@@ -1,12 +1,4 @@
-<head>
-  <title>translate</title>
-</head>
-
-<body>
-  {{> hello}}
-</body>
-
-<template name="hello">
+<template name="translate">
 	<div class="jumbotron"><h2>Lost in Translation - Mandarin Track</h2></div>
 	<div class="container">
 		<div class="row text-center" id="directions">
@@ -17,9 +9,9 @@
 		<div class="row  text-center" id="sentenceContainer">
 			<div class="col-lg-12">
 				<div id="sentence">
-					{{#with sentence}}
+					{{#each sentence}}
 						<h1>{{english}}</h1>
-					{{/with}}
+					{{/each}}
 				</div>
 			</div>
 		</div>
