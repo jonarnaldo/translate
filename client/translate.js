@@ -37,6 +37,18 @@ if (Meteor.isClient) {
           }
           this.dep.changed();
         }
+      },
+      scramble: function (array) {
+        var length = array.length, buffer, i;
+
+        while (length) {
+          i = Math.floor(Math.random() * length);
+          buffer = array[i];
+          array[i] = array[length-1];
+          array[length-1] = buffer;
+          length--;
+        }
+        return array;
       } 
     },
     Logic: {
@@ -104,7 +116,8 @@ if (Meteor.isClient) {
     if (Meteor.status().status === "connected") {
       console.log('connected!')
       T.Phrase.set();
-      return T.Phrase.get();
+
+      return T.Phrase.scramble(T.Phrase.get());
     } else {
       console.log(Meteor.status());
     }
