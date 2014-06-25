@@ -1,4 +1,7 @@
+
 if (Meteor.isClient) {
+
+  Meteor.subscribe('mandarin');
 
   T = {
     Counter: { 
@@ -39,11 +42,12 @@ if (Meteor.isClient) {
     Logic: {
       TruthyArr: [],
       Truthy: function (v1, v2) {
-        console.log('correct word:' + v1 + 'guess: ' + v2);
-        T.Logic.TruthyArr.push((v1 === v2) ? "true" : "false");
+        console.log('correct word:' + v1 + ' guess: ' + v2);
+        this.TruthyArr.push((v1 === v2) ? "true" : "false");
       },
 
       Test: function () { 
+        var that = this;
         var count = T.Counter.get();
         var obj = Mandarin.find({phrase: count}).fetch();
         var correctArr = obj[0].mandarin;
@@ -51,7 +55,7 @@ if (Meteor.isClient) {
 
         $('.guess').children().each(function(index, value){
           var res = $(value).html();
-            T.Logic.Truthy(correctArr[index] + " ", res);
+          that.Truthy(correctArr[index] + " ", res);
         });
       },
 
@@ -60,44 +64,45 @@ if (Meteor.isClient) {
         var obj = Mandarin.find({phrase: count}).fetch();
         var correctArrLength = obj[0].mandarin.length;
 
-        for (var i = 0; i < arr.length; i++) {
-          if (arr.length == correctArrLength) {
+        if (arr.length == correctArrLength) {
+          for (var i = 0; i < arr.length; i++) {
             if (arr[i] === 'false') {
               this.loseScenario();
               break;
             } else if (i == arr.length - 1) {
               this.winScenario();
             }
-          } else { 
-            this.loseScenario();
           }
+        } else { 
+          console.log('not all words used!');
+          this.loseScenario();
         }
+        
       },
       winScenario: function(){
         alert('Correct!');
         this.TruthyArr = [];
         $('.guess').children().remove();
         T.Counter.set();
-
-
       },
       loseScenario: function(){
         alert('Incorrect. Try Again!');
-        $('#guess').remove();
-        T.Logic.TruthyArr = [];
+        $('.guess').children().remove();
+        this.TruthyArr = [];
       }
     },
   };
 
+
+
   Template.translate.sentence = function () {
-    console.log("sentence deps.acive: " + Deps.active)
     var count = T.Counter.get();
     return Mandarin.find({phrase: count}).fetch();
   };
 
   Template.translate.phrase = function(){
-    console.log("phrase deps.acive: " + Deps.active)
     if (Meteor.status().status === "connected") {
+      console.log('connected!')
       T.Phrase.set();
       return T.Phrase.get();
     } else {
