@@ -77,7 +77,7 @@ if (Meteor.isClient) {
         var correctArrLength = obj[0].mandarin.length;
 
         if (arr.length == correctArrLength) {
-          for (var i = 0; i < arr.length; i++) {
+          for (var i = 0; i < arr.length; i++) { //could use foreach here but this is the  only for-loop in code...
             if (arr[i] === 'false') {
               this.loseScenario();
               break;
